@@ -11,6 +11,13 @@ RUN apt-get update -qq \
 
 RUN python -mvenv venv && ./venv/bin/pip install --no-cache-dir --upgrade pip
 
+# Выводим версии Python и pip
+RUN python --version
+RUN pip --version
+
+# Устанавливаем и обновляем pip
+RUN ./venv/bin/pip install --no-cache-dir --upgrade pip
+
 COPY . .
 
 # Install package from source code, compile translations
