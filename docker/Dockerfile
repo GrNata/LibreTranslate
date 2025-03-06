@@ -1,46 +1,66 @@
 # Используем официальный Python образ
-FROM python:3.11.11-slim-bullseye AS builder
+FROM python:3.11-slim
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
 # Копируем все файлы проекта в контейнер
-COPY . .
+COPY . /app
 
-# Создаём виртуальное окружение и активируем его
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Устанавливаем зависимости
+RUN pip install libretranslate
 
-# Устанавливаем pip и зависимости
-RUN pip install --upgrade setuptools wheel pip
-
-# Устанавливаем проект
-RUN pip install 
-
-# Устанавливаем и выводим версии
-RUN python --version
-RUN pip --version
-
-# # Устанавливаем необходимые пакеты
-# RUN pip install -r requirements.txt
-
-# Финальная стадия
-FROM python:3.11.11-slim-bullseye
-
-WORKDIR /app
-
-# Копируем всё с этапа сборки
-COPY --from=builder /app /app
-
-# Устанавливаем зависимости и запускаем приложение
-RUN pip install -r requirements.txt
-
-# Открываем порты
+# Открываем порт
 EXPOSE 5000
 
-# Запуск приложения
-CMD ["./venv/bin/libretranslate", "--host", "*"]
+# Запускаем приложение
+CMD ["libretranslate", "--host", "*"]
 
+
+
+# # Используем официальный Python образ
+# FROM python:3.11.11-slim-bullseye AS builder
+
+# # Устанавливаем рабочую директорию
+# WORKDIR /app
+
+# # Копируем все файлы проекта в контейнер
+# COPY . /
+
+# # Создаём виртуальное окружение и активируем его
+# RUN python -m venv /opt/venv
+# ENV PATH="/opt/venv/bin:$PATH"
+
+# # Устанавливаем pip и зависимости
+# RUN pip install --upgrade setuptools wheel pip
+
+# # Устанавливаем проект
+# RUN pip install 
+
+# # Устанавливаем и выводим версии
+# RUN python --version
+# RUN pip --version
+
+# # # Устанавливаем необходимые пакеты
+# # RUN pip install -r requirements.txt
+
+# # Финальная стадия
+# FROM python:3.11.11-slim-bullseye
+
+# WORKDIR /app
+
+# # Копируем всё с этапа сборки
+# COPY --from=builder /app /app
+
+# # Устанавливаем зависимости и запускаем приложение
+# RUN pip install -r requirements.txt
+
+# # Открываем порты
+# EXPOSE 5000
+
+# # Запуск приложения
+# CMD ["./venv/bin/libretranslate", "--host", "*"]
+# _____________________________
 
 # FROM python:3.11.11-slim-bullseye AS builder
 
