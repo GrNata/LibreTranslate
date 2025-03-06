@@ -15,14 +15,14 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --upgrade setuptools wheel pip
 
 # Устанавливаем проект
-RUN pip install .
+RUN pip install 
 
 # Устанавливаем и выводим версии
 RUN python --version
 RUN pip --version
 
-# Устанавливаем необходимые пакеты
-RUN pip install -r requirements.txt
+# # Устанавливаем необходимые пакеты
+# RUN pip install -r requirements.txt
 
 # Финальная стадия
 FROM python:3.11.11-slim-bullseye
