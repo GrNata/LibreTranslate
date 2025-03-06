@@ -9,14 +9,20 @@ RUN apt-get update -qq \
   && apt-get clean \
   && rm -rf /var/lib/apt
 
-RUN python -mvenv venv && ./venv/bin/pip install --no-cache-dir --upgrade pip
+# RUN python -mvenv venv && ./venv/bin/pip install --no-cache-dir --upgrade pip
+# Создаём виртуальное окружение
+RUN python -m venv venv
 
 # Выводим версии Python и pip
 RUN python --version
 RUN pip --version
 
-# Устанавливаем и обновляем pip
+# Обновляем зависимости для сборки
+RUN ./venv/bin/pip install --upgrade build setuptools hatchling
+
+# Устанавливаем пакеты
 RUN ./venv/bin/pip install --no-cache-dir --upgrade pip
+RUN ./venv/bin/pip install
 
 COPY . .
 
